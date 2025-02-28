@@ -12,7 +12,5 @@ def contacts(request):
     if request.method == "POST":
         name = request.POST.get("name")
         message = request.POST.get("message")
-        return HttpResponse(
-            f"Спасибо, {name}! Ваше сообщение принято и будет рассмотрено в ближайшее время."
-        )
+        return HttpResponse(f"Спасибо, {name}! Ваше сообщение принято и будет рассмотрено в ближайшее время.")
     return render(request, "contacts.html")
