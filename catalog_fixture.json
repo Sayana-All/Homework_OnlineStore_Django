@@ -32,13 +32,13 @@
     "model": "catalog.product",
     "pk": 5,
     "fields": {
-        "name": "Шкаф",
-        "description": "Большой платяной шкаф",
-        "photo": "",
+        "name": "Шкаф-купе",
+        "description": "Большой платяной шкаф с зеркалами",
+        "photo": "photos/шкаф.jpg",
         "category": 5,
-        "price": 9900,
+        "price": 19900,
         "created_at": "2025-03-01",
-        "updated_at": "2025-02-28T22:24:22.588Z"
+        "updated_at": "2025-03-01T18:12:34.136Z"
     }
 },
 {
@@ -47,24 +47,24 @@
     "fields": {
         "name": "Телевизор ж/к, 27 дюймов",
         "description": "Широкоэкранный телевизор с насыщенным ярким изображением",
-        "photo": "",
+        "photo": "photos/Телевизор.jpg",
         "category": 6,
         "price": 22500,
         "created_at": "2025-03-01",
-        "updated_at": "2025-02-28T21:33:23.872Z"
+        "updated_at": "2025-03-01T18:04:44.301Z"
     }
 },
 {
     "model": "catalog.product",
     "pk": 8,
     "fields": {
-        "name": "Чайник 15л",
+        "name": "Чайник эл. 1,7л",
         "description": "Чайник электрический, стеклокерамика",
-        "photo": "",
+        "photo": "photos/Чайник.png",
         "category": 6,
         "price": 3200,
         "created_at": "2025-03-01",
-        "updated_at": "2025-02-28T21:35:18.744Z"
+        "updated_at": "2025-03-01T18:01:18.278Z"
     }
 }
 ]
