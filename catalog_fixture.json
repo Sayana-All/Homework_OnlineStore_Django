@@ -1,0 +1,70 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+        "name": "Мебель для дома",
+        "description": ""
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+        "name": "Бытовая техника",
+        "description": "Техника для дома на все случаи жизни"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "Кровать 2-х спальная",
+        "description": "Хорошая 2-х спальная кровать с деревянным каркасом",
+        "photo": "photos/Кровать_двуспальная.jpeg",
+        "category": 5,
+        "price": 15000,
+        "created_at": "2025-03-01",
+        "updated_at": "2025-02-28T21:25:09.310Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "Шкаф-купе",
+        "description": "Большой платяной шкаф с зеркалами",
+        "photo": "photos/шкаф.jpg",
+        "category": 5,
+        "price": 19900,
+        "created_at": "2025-03-01",
+        "updated_at": "2025-03-01T18:12:34.136Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 7,
+    "fields": {
+        "name": "Телевизор ж/к, 27 дюймов",
+        "description": "Широкоэкранный телевизор с насыщенным ярким изображением",
+        "photo": "photos/Телевизор.jpg",
+        "category": 6,
+        "price": 22500,
+        "created_at": "2025-03-01",
+        "updated_at": "2025-03-01T18:04:44.301Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 8,
+    "fields": {
+        "name": "Чайник эл. 1,7л",
+        "description": "Чайник электрический, стеклокерамика",
+        "photo": "photos/Чайник.png",
+        "category": 6,
+        "price": 3200,
+        "created_at": "2025-03-01",
+        "updated_at": "2025-03-01T18:01:18.278Z"
+    }
+}
+]
