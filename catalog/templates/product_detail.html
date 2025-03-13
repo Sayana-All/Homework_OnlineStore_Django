@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load my_tags %}
+{% block title %}Детали о продукте: {% endblock %}
+
+{% block content %}
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h2 class="display-4"><b>Подробнее о продукте</b></h2>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="col">
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h3 class="my-0 fw-normal text-center">{{ product.name }}</h3>
+                </div>
+                {% if product.photo == null %}
+                    <img src="{{ product.photo | media_filter }}">
+                {% else %}
+                    <img src="/media/{{ product.photo }}">
+                {% endif %}
+                <div class="card-body">
+                    <p>{{ product.description }}</p>
+                    <p><b>Категория:</b> {{ product.category }}</p>
+                    <h5>Цена: ${{ product.price }}</h5>
+                    <button type="button" class="w-100 mt-3 btn btn-lg btn-outline-primary">Купить</button>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group mt-3">
+                            <a href="/home/" class="btn btn-sm btn-outline-info">В каталог</a>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">Изменить</a>
+                        </div>
+                        <small class="text-body-secondary">{{ product.updated_at }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
