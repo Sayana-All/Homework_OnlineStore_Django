@@ -34,7 +34,7 @@
                         <select class="form-select" name="category" id="category">
                             <option selected>Выберите категорию для товара...</option>
                             {% for category in categories %}
-                            <option value="{{ category.name }}">{{ category.name }}</option>
+                            <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
