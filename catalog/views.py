@@ -26,14 +26,21 @@ def product_detail(request, pk):
     context = {"product": product}
     return render(request, "product_detail.html", context)
 
+
 def add_product(request):
     """Контроллер для страницы контактов"""
-    products = Product.objects.all()
     categories = Category.objects.all()
-    context = {"categories": categories,
-               "products": products,}
+    context = {"categories": categories}
+
     if request.method == "POST":
-        name = request.POST.get("name")
-        message = request.POST.get("message")
-        return HttpResponse(f"Спасибо, {name}! Ваше сообщение принято и будет рассмотрено в ближайшее время.")
-    return render(request, "add_product.html")
+        product = Product.objects.create(
+            name=request.POST.get("name"),
+            description=request.POST.get("description"),
+            photo=request.POST.get("photo"),
+            category=request.POST.get("category"),
+            price=request.POST.get("price"),
+        )
+        product.save()
+        return HttpResponse(f"Спасибо, товар {product.name} добавлен в каталог! Можете посмотреть его на странице")
+
+    return render(request, "add_product.html", context)

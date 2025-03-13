@@ -3,6 +3,9 @@
 {% block title %}Главная страница{% endblock %}
 
 {% block content %}
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a class="me-3 mb-3 btn btn-success" href="/add_product/" role="button"><b>+ Новый продукт</b></a>
+    </div>
     <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         {% for product in products %}
         <div class="col">
