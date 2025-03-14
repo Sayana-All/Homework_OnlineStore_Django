@@ -28,7 +28,7 @@ def product_detail(request, pk):
 
 
 def add_product(request):
-    """Контроллер для страницы контактов"""
+    """Контроллер для добавления нового продукта"""
     categories = Category.objects.all()
     context = {"categories": categories}
 
@@ -44,6 +44,6 @@ def add_product(request):
             price=request.POST.get("price"),
         )
         product.save()
-        return HttpResponse(f"Спасибо, товар {product.name} добавлен в каталог! Можете посмотреть его на странице")
+        return redirect(reverse("catalog:home"))
 
     return render(request, "add_product.html", context)

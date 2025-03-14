@@ -34,7 +34,7 @@ class Product(models.Model):
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name="products")
     price = models.IntegerField(verbose_name="Цена", help_text="Введите цену за покупку")
     created_at = DateField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата последнего изменения")
+    updated_at = models.DateField(auto_now=True, verbose_name="Дата последнего изменения")
 
     def __str__(self):
         return f"{self.name} по цене: {self.price}$"
