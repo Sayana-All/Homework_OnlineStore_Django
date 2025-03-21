@@ -1,10 +1,14 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+
+from catalog.models import Category, Product
 
 
 def home(request):
     """Контроллер для домашней страницы"""
-    return render(request, "home.html")
+    products = Product.objects.all()
+    context = {"products": products}
+    return render(request, "home.html", context)
 
 
 def contacts(request):
@@ -14,3 +18,32 @@ def contacts(request):
         message = request.POST.get("message")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение принято и будет рассмотрено в ближайшее время.")
     return render(request, "contacts.html")
+
+
+def product_detail(request, pk):
+    """Контроллер для домашней страницы"""
+    product = get_object_or_404(Product, pk=pk)
+    context = {"product": product}
+    return render(request, "product_detail.html", context)
+
+
+def add_product(request):
+    """Контроллер для добавления нового продукта"""
+    categories = Category.objects.all()
+    context = {"categories": categories}
+
+    if request.method == "POST":
+        category_id = request.POST.get("category")[0]
+        category = Category.objects.get(id=category_id)
+
+        product = Product.objects.create(
+            name=request.POST.get("name"),
+            description=request.POST.get("description"),
+            photo=request.POST.get("photo"),
+            category=category,
+            price=request.POST.get("price"),
+        )
+        product.save()
+        return redirect(reverse("catalog:home"))
+
+    return render(request, "add_product.html", context)

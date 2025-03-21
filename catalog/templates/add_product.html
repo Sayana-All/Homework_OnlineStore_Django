@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Новый продукт{% endblock %}
+
+{% block content %}
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h2 class="display-4"><b>Новый продукт</b></h2>
+</div>
+
+<div class="container">
+    <div class="row text-start">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Добавление нового товара:</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" action="" class="form-floating">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="name">Наименование</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Введите наименование товара" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description">Описание</label>
+                        <textarea type="text" name="description" class="form-control" id="description" placeholder="Введите описание товара" required></textarea>
+                    </div>
+                    <div class="mb-5">
+                        <label for="photo" class="form-label">Фото товара:</label>
+                        <input class="form-control" type="file" name="photo" id="photo">
+                    </div>
+                    <div class="input-group mb-4">
+                        <label class="input-group-text" for="category">Категория: </label>
+                        <select class="form-select" name="category" id="category">
+                            <option selected>Выберите категорию для товара...</option>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-group mb-5 md-4">
+                        <label for="price" class="form-label me-2 text-center">Цена:</label>
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control" name="price" id="price" aria-label="Amount (to the nearest dollar)" placeholder="Укажите стоимость">
+                        <span class="input-group-text">.00</span>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a class="me-3 mb-3 btn btn-outline-danger" href="{% url 'catalog:home' %}" role="button">Отмена</a>
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Добавить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
