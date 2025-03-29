@@ -1,0 +1,29 @@
+{% extends "blogs/base.html" %}
+{% block title %}Удалить статью{% endblock %}
+
+{% block content %}
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+  <h2 class="display-4"><b>Подтверждение удаления</b></h2>
+</div>
+
+<div class="container">
+    <div class="row text-start">
+        <div class="col-10">
+            <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+                <div class="card text-center mb-4 box-shadow">
+                    <p class="card-text">
+                        <h4 class="font-weight-normal">Вы действительно хотите удалить "{{ object.title }}"?</h4>
+                    </p>
+                    <div class="card-body">
+                        {% csrf_token %}
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a class="me-3 mb-3 btn btn-outline-secondary" href="{% url 'blog:article_detail' object.pk %}" role="button">Отмена</a>
+                        <button type="submit" class="me-2 btn btn-lg btn-block btn-outline-danger">Удалить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

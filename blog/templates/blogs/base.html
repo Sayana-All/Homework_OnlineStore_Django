@@ -85,7 +85,7 @@
   </style>
 
   <!-- Custom styles for this template -->
-  <link href="carousel.css" rel="stylesheet">
+  <link href="/static/css/carousel.css" rel="stylesheet">
 </head>
 <body>
   <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -145,22 +145,15 @@
   </header>
 
   <main>
-    {% include "blogs/includes/header_scroll.html" %}
-
-
     <!-- Marketing messaging and featurettes
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
-
-    <div class="container marketing">
-      {% block content%}{% endblock %}
-
-    </div><!-- /.container -->
+    {% block content%}{% endblock %}
 
     <!-- FOOTER -->
-    <footer class="container">
-      <p class="float-end"><a href="#">Вернуться наверх</a></p>
-      <p>&copy; 2017–2023 SkyStore &middot; <a href="#">Конфиденциальность</a> &middot; <a href="#">Условия</a></p>
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+      <p class="me-4 float-end"><a href="#">Вернуться наверх</a></p>
+      <p class="p-2">&copy; 2017–2023 SkyStore &middot; <a href="#">Конфиденциальность</a> &middot; <a href="#">Условия</a></p>
     </footer>
   </main>
 

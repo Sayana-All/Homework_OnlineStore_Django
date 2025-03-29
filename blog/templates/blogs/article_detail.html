@@ -1,0 +1,45 @@
+{% extends "blogs/base.html" %}
+{% block title %}Подробная статья{% endblock %}
+
+{% block content %}
+{% include "blogs/includes/header_scroll.html" %}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+  <a class="btn btn-lg btn-warning" href="{% url 'blog:add_article' %}" role="button"><b>+ Новая статья</b></a>
+</div>
+<div class="container marketing">
+  <div class="row d-flex justify-content-between align-items-center">
+      <div class="col-md-9 align-items-start order-md-2">
+        <h2 class="heading text-bg-warning p-3 fw-normal lh-1">{{ article.title }}</h2>
+        <p>
+          <small class="text-body-secondary">
+            {{ article.created_at }} | <button type="button" class="{% if article.is_publication == True %}btn btn-outline-success{% else %}btn btn-outline-secondary btn-sm{% endif %}">{% if article.is_publication == True %}<span class="badge text-bg-success rounded-circle"> </span> published{% else %}<span class="badge text-bg-secondary"> </span> not published{% endif %}</button>
+          </small>
+        </p>
+        <p class="lead">{{ article.content }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group mt-3">
+            <a href="{% url 'blog:article_edit' article.pk %}" class="btn btn-sm btn-outline-secondary">Изменить</a>
+            <a href="{% url 'blog:article_delete' article.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+            <a href="{% url 'blog:articles_list' %}" class="btn btn-sm btn-outline-info">Назад к списку статей &raquo;</a>
+          </div>
+          <small class="text-body-secondary rounded float-end me-5 mt-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>
+            {{ article.views_counter }}
+          </small>
+        </div>
+
+      </div>
+      <div class="col-md-3 order-md-1">
+        {% if artile.preview != "null" %}
+        <img src="/media/{{ article.preview }}" width="300" height="300" class="rounded float-end">
+        {% else %}
+        <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="300" height="300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 300x300" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)"/><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">300x300</text></svg>
+        {% endif %}
+      </div>
+      <hr class="featurette-divider">
+  </div>
+
+  <hr class="featurette-divider">
+</div>
+{% endblock %}
