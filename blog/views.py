@@ -1,0 +1,62 @@
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from blog.models import BlogArticle
+
+
+class BlogArticleListView(ListView):
+    """Контроллер со списком статей для домашней страницы"""
+
+    model = BlogArticle
+    template_name = "blogs/articles_list.html"
+    context_object_name = "articles"
+
+    def get_queryset(self):
+        """Метод для отображения только опубликованных статей"""
+        return BlogArticle.objects.filter(is_publication=True)
+
+
+class BlogArticleDetailView(DetailView):
+    """Контроллер для отображения подробного содержания статьи"""
+
+    model = BlogArticle
+    template_name = "blogs/article_detail.html"
+    context_object_name = "article"
+
+    def get_object(self, queryset=None):
+        """Метод для подсчета количества просмотров статьи"""
+        self.object = super().get_object(queryset)
+        self.object.views_counter += 1
+        self.object.save()
+        return self.object
+
+
+class BlogArticleCreateView(CreateView):
+    """Контроллер для добавления новой записи в блог"""
+
+    model = BlogArticle
+    fields = ["title", "content", "preview", "is_publication"]
+    template_name = "blogs/article_form.html"
+    success_url = reverse_lazy("blog:articles_list")
+
+
+class BlogArticleUpdateView(UpdateView):
+    """Контроллер для изменения существующей записи"""
+
+    model = BlogArticle
+    fields = ["title", "content", "preview", "is_publication"]
+    template_name = "blogs/article_form.html"
+    success_url = reverse_lazy("blog:articles_list")
+
+    def get_success_url(self):
+        """Метод для изменения адреса перенаправления после редактирования записи"""
+        return reverse("blog:article_detail", args=[self.kwargs.get("pk")])
+
+
+class BlogArticleDeleteView(DeleteView):
+    """Контроллер для удаления статьи"""
+
+    model = BlogArticle
+    template_name = "blogs/article_confirm_delete.html"
+    success_url = reverse_lazy("blog:articles_list")

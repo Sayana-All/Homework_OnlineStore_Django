@@ -1,49 +1,53 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-from catalog.models import Category, Product
-
-
-def home(request):
-    """Контроллер для домашней страницы"""
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "home.html", context)
+from catalog.models import Product
 
 
-def contacts(request):
+class ProductListView(ListView):
+    """Контроллер со списком продуктов для домашней страницы"""
+    model = Product
+    template_name = "catalog/product_list.html"
+    context_object_name = "products"
+
+
+class ProductDetailView(DetailView):
+    """Контроллер для отображения детальной информации о продукте"""
+    model = Product
+    template_name = "catalog/product_detail.html"
+    context_object_name = "product"
+
+
+class ProductCreateView(CreateView):
+    """Контроллер для добавления нового продукта"""
+    model = Product
+    fields = ["name", "description", "photo", "category", "price"]
+    template_name = "catalog/product_form.html"
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ProductUpdateView(UpdateView):
+    """Контроллер для редактирования существующего продукта"""
+    model = Product
+    fields = ["name", "description", "photo", "category", "price"]
+    template_name = "catalog/product_form.html"
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ProductDeleteView(DeleteView):
+    """Контроллер для удаления продукта"""
+    model = Product
+    template_name = "catalog/product_confirm_delete.html"
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ContactsTemplateView(TemplateView):
     """Контроллер для страницы контактов"""
-    if request.method == "POST":
+    template_name = "catalog/contacts.html"
+
+    def post(self, request, *args, **kwargs):
         name = request.POST.get("name")
         message = request.POST.get("message")
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение принято и будет рассмотрено в ближайшее время.")
-    return render(request, "contacts.html")
-
-
-def product_detail(request, pk):
-    """Контроллер для домашней страницы"""
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, "product_detail.html", context)
-
-
-def add_product(request):
-    """Контроллер для добавления нового продукта"""
-    categories = Category.objects.all()
-    context = {"categories": categories}
-
-    if request.method == "POST":
-        category_id = request.POST.get("category")[0]
-        category = Category.objects.get(id=category_id)
-
-        product = Product.objects.create(
-            name=request.POST.get("name"),
-            description=request.POST.get("description"),
-            photo=request.POST.get("photo"),
-            category=category,
-            price=request.POST.get("price"),
-        )
-        product.save()
-        return redirect(reverse("catalog:home"))
-
-    return render(request, "add_product.html", context)

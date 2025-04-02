@@ -1,0 +1,41 @@
+{% extends "blogs/base.html" %}
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+{% include "blogs/includes/header_scroll.html" %}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-center">
+  <a class="btn btn-lg btn-warning" href="{% url 'blog:add_article' %}" role="button"><b>+ Новая статья</b></a>
+</div>
+<div class="container marketing">
+  <hr class="featurette-divider">
+
+  <div class="row featurette">
+    {% for article in articles %}
+      <div class="col-md-9">
+        <h2 class="heading text-bg-warning p-3 fw-normal lh-1">{{ article.title }}</h2>
+        <p>
+          <small class="text-body-secondary">
+            {{ article.created_at }} | <button type="button" class="{% if article.is_publication == True %}btn btn-outline-success{% else %}btn btn-outline-secondary btn-sm{% endif %}">{% if article.is_publication == True %}<span class="badge text-bg-success rounded-circle"> </span> published{% else %}<span class="badge text-bg-secondary"> </span> not published{% endif %}</button>
+          </small>
+        </p>
+        <p class="lead">{{ article.content | truncatechars:100 }}</p>
+        <p><a class="btn btn-info" href="{% url 'blog:article_detail' article.pk %}">Подробнее &raquo;</a></p>
+        <small class="text-body-secondary rounded float-end me-5 mt-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>
+          {{ article.views_counter }}
+        </small>
+      </div>
+      <div class="col-auto">
+        {% if artile.preview != "null" %}
+        <img src="/media/{{ article.preview }}" width="300" height="300" class="rounded float-end">
+        {% else %}
+        <img src="/media/photos/no_image.jpg" width="300" height="300" class="rounded float-end">
+        {% endif %}
+      </div>
+      <hr class="featurette-divider">
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}

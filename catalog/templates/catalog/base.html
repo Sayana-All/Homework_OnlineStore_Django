@@ -150,10 +150,10 @@
     </svg>
 
     <div class="container py-3">
-        {% include "includes/inc_menu.html" %}
+        {% include "catalog/includes/inc_menu.html" %}
 
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-          {% include "includes/header.html" %}
+          {% include "catalog/includes/header.html" %}
         </div>
 
         <div class="container">
@@ -178,7 +178,7 @@
                 <div class="col-6 col-md">
                     <h5>Дополнительно</h5>
                     <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Мы пишем</a></li>
+                        <li><a class="text-muted" href="{% url 'blog:articles_list' %}">Мы пишем</a></li>
                     </ul>
                 </div>
                 <div class="col-6 col-md">
