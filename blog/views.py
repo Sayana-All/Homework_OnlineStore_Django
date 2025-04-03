@@ -2,6 +2,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from blog.forms import BlogArticleForm
 from blog.models import BlogArticle
 
 
@@ -36,7 +37,7 @@ class BlogArticleCreateView(CreateView):
     """Контроллер для добавления новой записи в блог"""
 
     model = BlogArticle
-    fields = ["title", "content", "preview", "is_publication"]
+    form_class = BlogArticleForm
     template_name = "blogs/article_form.html"
     success_url = reverse_lazy("blog:articles_list")
 
@@ -45,7 +46,7 @@ class BlogArticleUpdateView(UpdateView):
     """Контроллер для изменения существующей записи"""
 
     model = BlogArticle
-    fields = ["title", "content", "preview", "is_publication"]
+    form_class = BlogArticleForm
     template_name = "blogs/article_form.html"
     success_url = reverse_lazy("blog:articles_list")
 
