@@ -51,10 +51,10 @@ class ProductForm(ModelForm):
 
         for word in forbidden_words:
             if word in name.lower():
-                self.add_error("name", "Внимание! Не используйте запрещенные слова в наименовании продукта")
+                self.add_error("name", "Внимание! Не используйте запрещенные слова в наименовании продукта (см. Справка)")
 
             elif word in description.lower():
-                self.add_error("description", "Внимание! Не используйте запрещенные слова в описании продукта")
+                self.add_error("description", "Внимание! Не используйте запрещенные слова в описании продукта (см. Справка)")
 
 
 class CategoryForm(StyleFormMixin, ModelForm):
