@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from django.conf.global_settings import AUTH_USER_MODEL
 from dotenv import load_dotenv
 
 
@@ -24,6 +25,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "phonenumber_field",
 
     "catalog",
     "blog",
@@ -111,3 +113,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Список запрещенных слов
 forbidden_words = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
+
+# Настройки для аутентификации
+AUTH_USER_MODEL = "users.User"
