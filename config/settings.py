@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 
     "catalog",
     "blog",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -96,11 +97,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Настройки статики
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
+# Настройки медиа
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
