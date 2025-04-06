@@ -32,8 +32,8 @@ class ProductForm(ModelForm):
         self.fields["description"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите описание товара"}
         )
-        self.fields["photo"].widget.attrs.update({"class": "form-input"})
-        self.fields["category"].widget.attrs.update({"class": "form-check"})
+        self.fields["photo"].widget.attrs.update({"class": "form-control"})
+        self.fields["category"].widget.attrs.update({"class": "form-select"})
         self.fields["price"].widget.attrs.update({"class": "form-control", "placeholder": "Введите цену"})
 
     def clean_price(self):
