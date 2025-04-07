@@ -18,6 +18,9 @@
                     </div>
                     <div class="card-body">
                         {% csrf_token %}
+                        <div class="mb-3 text-warning p-2">
+                            <p><em>Для доступа к большему функционалу сайта и своему профилю необходимо войти в аккаунт.</em></p>
+                        </div>
                         {{ form.as_p }}
                     </div>
                     <button type="submit" class="btn btn-lg btn-outline-primary">Войти</button>

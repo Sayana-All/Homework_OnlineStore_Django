@@ -13,17 +13,26 @@
           <a class="nav-link active" aria-current="page" href="{% url 'blog:articles_list' %}">Главная</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Статьи</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Вход/Регистрация</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Профиль</a>
+          <a class="nav-link" href="#">Авторы</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'catalog:product_list' %}">Каталог SkyStore</a>
         </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link disabled">Профиль</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:logout' %}">Выход</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:registration' %}">Регистрация</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="{% url 'users:login' %}">Вход</a>
+          </li>
+        {% endif %}
       </ul>
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Строка для поиска" aria-label="Search">
