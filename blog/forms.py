@@ -20,4 +20,4 @@ class BlogArticleForm(StyleFormMixin, ModelForm):
 
     class Meta:
         model = BlogArticle
-        exclude = ["created_at", "views_counter"]
+        exclude = ["author", "created_at", "views_counter"]

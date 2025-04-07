@@ -16,7 +16,7 @@
         <h2 class="heading text-bg-warning p-3 fw-normal lh-1">{{ article.title }}</h2>
         <p>
           <small class="text-body-secondary">
-            {{ article.created_at }} | <button type="button" class="{% if article.is_publication == True %}btn btn-outline-success{% else %}btn btn-outline-secondary btn-sm{% endif %}">{% if article.is_publication == True %}<span class="badge text-bg-success rounded-circle"> </span> published{% else %}<span class="badge text-bg-secondary"> </span> not published{% endif %}</button>
+            {{ article.created_at }} {% if article.author %}by <a href="#">{{ article.author }}</a>{% endif %} | <button type="button" class="{% if article.is_publication == True %}btn btn-outline-success{% else %}btn btn-outline-secondary btn-sm{% endif %}">{% if article.is_publication == True %}<span class="badge text-bg-success rounded-circle"> </span> published{% else %}<span class="badge text-bg-secondary"> </span> not published{% endif %}</button>
           </small>
         </p>
         <p class="lead">{{ article.content | truncatechars:100 }}</p>
