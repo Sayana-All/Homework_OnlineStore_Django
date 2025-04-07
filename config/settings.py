@@ -4,7 +4,6 @@ from pathlib import Path
 from django.conf.global_settings import AUTH_USER_MODEL, LOGIN_REDIRECT_URL, LOGOUT_REDIRECT_URL, SERVER_EMAIL
 from dotenv import load_dotenv
 
-
 load_dotenv(override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +25,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "phonenumber_field",
-
     "catalog",
     "blog",
     "users",

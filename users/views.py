@@ -2,7 +2,7 @@ import secrets
 
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView
 
 from config.settings import EMAIL_HOST_USER

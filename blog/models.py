@@ -15,7 +15,15 @@ class BlogArticle(models.Model):
         verbose_name="Изображение",
         help_text="Загрузите изображение для превью",
     )
-    author = models.ForeignKey(User, verbose_name="Автор", help_text="Укажите автора статьи", blank=True, null=True, on_delete=models.SET_NULL, related_name="articles")
+    author = models.ForeignKey(
+        User,
+        verbose_name="Автор",
+        help_text="Укажите автора статьи",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="articles",
+    )
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     is_publication = models.BooleanField(default=True, verbose_name="Признак публикации")
