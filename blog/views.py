@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -18,7 +19,7 @@ class BlogArticleListView(ListView):
         return BlogArticle.objects.filter(is_publication=True)
 
 
-class BlogArticleDetailView(DetailView):
+class BlogArticleDetailView(LoginRequiredMixin, DetailView):
     """Контроллер для отображения подробного содержания статьи"""
 
     model = BlogArticle
@@ -33,7 +34,7 @@ class BlogArticleDetailView(DetailView):
         return self.object
 
 
-class BlogArticleCreateView(CreateView):
+class BlogArticleCreateView(LoginRequiredMixin, CreateView):
     """Контроллер для добавления новой записи в блог"""
 
     model = BlogArticle
@@ -41,8 +42,16 @@ class BlogArticleCreateView(CreateView):
     template_name = "blogs/article_form.html"
     success_url = reverse_lazy("blog:articles_list")
 
+    def form_valid(self, form):
+        """Метод для переопределения валидации для автоматического добавления автора статьи"""
+        article = form.save()
+        user = self.request.user
+        article.author = user
+        article.save()
+        return super().form_valid(form)
 
-class BlogArticleUpdateView(UpdateView):
+
+class BlogArticleUpdateView(LoginRequiredMixin, UpdateView):
     """Контроллер для изменения существующей записи"""
 
     model = BlogArticle
@@ -55,7 +64,7 @@ class BlogArticleUpdateView(UpdateView):
         return reverse("blog:article_detail", args=[self.kwargs.get("pk")])
 
 
-class BlogArticleDeleteView(DeleteView):
+class BlogArticleDeleteView(LoginRequiredMixin, DeleteView):
     """Контроллер для удаления статьи"""
 
     model = BlogArticle
