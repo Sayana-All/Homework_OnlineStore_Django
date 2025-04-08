@@ -1,0 +1,31 @@
+{% extends "catalog/base.html" %}
+
+{% block title %}Регистрация пользователя{% endblock %}
+
+{% block content %}
+<div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+    <h2 class="display-4"><b>Регистрация пользователя</b></h2>
+</div>
+
+<div class="container text-start">
+    <div class="row justify-content-center">
+        <form method="post" action="" class="form-floating" enctype="multipart/form-data">
+            <div class="col-md-8">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Введите данные для регистрации:</h4>
+                    </div>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        <div class="mb-3 text-warning p-2">
+                            <p><em>Для доступа к большему функционалу и возможностям сайта необходимо пройти регистрацию.</em></p>
+                        </div>
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-outline-primary">Зарегистрироваться</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,7 @@
-from django.forms import BooleanField, ModelForm
+from django.contrib.auth.forms import UserCreationForm
+from django.forms import BooleanField
 
-from blog.models import BlogArticle
+from users.models import User
 
 
 class StyleFormMixin:
@@ -15,9 +16,9 @@ class StyleFormMixin:
                 field.widget.attrs["class"] = "form-control"
 
 
-class BlogArticleForm(StyleFormMixin, ModelForm):
-    """Класс формы для создания и редактирования модели продуктов"""
+class UserRegisterForm(StyleFormMixin, UserCreationForm):
+    """Класс формы для регистрации нового пользователя"""
 
     class Meta:
-        model = BlogArticle
-        exclude = ["author", "created_at", "views_counter"]
+        model = User
+        fields = ("email", "password1", "password2")

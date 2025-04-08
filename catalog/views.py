@@ -1,8 +1,9 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.http import HttpResponse
-from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, TemplateView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from catalog.forms import ProductForm
 from catalog.models import Product
@@ -17,7 +18,7 @@ class ProductListView(ListView):
     context_object_name = "products"
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """Контроллер для отображения детальной информации о продукте"""
 
     model = Product
@@ -25,7 +26,7 @@ class ProductDetailView(DetailView):
     context_object_name = "product"
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """Контроллер для добавления нового продукта"""
 
     model = Product
@@ -40,7 +41,7 @@ class ProductCreateView(CreateView):
         return context
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """Контроллер для редактирования существующего продукта"""
 
     model = Product
@@ -83,7 +84,7 @@ class ProductUpdateView(UpdateView):
 #        return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """Контроллер для удаления продукта"""
 
     model = Product
@@ -91,7 +92,7 @@ class ProductDeleteView(DeleteView):
     success_url = reverse_lazy("catalog:product_list")
 
 
-class ContactsTemplateView(TemplateView):
+class ContactsTemplateView(LoginRequiredMixin, TemplateView):
     """Контроллер для страницы контактов"""
 
     template_name = "catalog/contacts.html"

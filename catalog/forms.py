@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm, BooleanField
+from django.forms import BooleanField, ModelForm
 
-from catalog.models import Product, Category
+from catalog.models import Category, Product
 from config.settings import forbidden_words
 
 
@@ -32,8 +32,8 @@ class ProductForm(ModelForm):
         self.fields["description"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите описание товара"}
         )
-        self.fields["photo"].widget.attrs.update({"class": "form-input"})
-        self.fields["category"].widget.attrs.update({"class": "form-check"})
+        self.fields["photo"].widget.attrs.update({"class": "form-control"})
+        self.fields["category"].widget.attrs.update({"class": "form-select"})
         self.fields["price"].widget.attrs.update({"class": "form-control", "placeholder": "Введите цену"})
 
     def clean_price(self):
@@ -51,10 +51,14 @@ class ProductForm(ModelForm):
 
         for word in forbidden_words:
             if word in name.lower():
-                self.add_error("name", "Внимание! Не используйте запрещенные слова в наименовании продукта (см. Справка)")
+                self.add_error(
+                    "name", "Внимание! Не используйте запрещенные слова в наименовании продукта (см. Справка)"
+                )
 
             elif word in description.lower():
-                self.add_error("description", "Внимание! Не используйте запрещенные слова в описании продукта (см. Справка)")
+                self.add_error(
+                    "description", "Внимание! Не используйте запрещенные слова в описании продукта (см. Справка)"
+                )
 
 
 class CategoryForm(StyleFormMixin, ModelForm):
