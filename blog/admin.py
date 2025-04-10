@@ -13,4 +13,4 @@ class AdminBlogArticle(admin.ModelAdmin):
         "created_at",
         "views_counter",
     )
-    search_fields = ("id", "title", "created_at")
+    search_fields = ("id", "title", "created_at", "views_counter")

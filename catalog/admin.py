@@ -15,6 +15,6 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     """Класс продуктов для админки"""
 
-    list_display = ("id", "name", "price", "category")
-    list_filter = ("category",)
+    list_display = ("id", "name", "price", "category", "owner", "is_publication")
+    list_filter = ("category", "owner")
     search_fields = ("name", "photo", "description", "category__name")
