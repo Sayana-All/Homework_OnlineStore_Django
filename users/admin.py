@@ -7,5 +7,5 @@ from users.models import User
 class UserAdmin(admin.ModelAdmin):
     """Класс управления пользователями для админки"""
 
-    list_display = ("id", "email", "phone")
+    list_display = ("id", "email", "phone", "is_active")
     search_fields = ("email", "phone")
