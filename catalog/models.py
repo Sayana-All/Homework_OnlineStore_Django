@@ -37,7 +37,7 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name="Цена", help_text="Введите цену за покупку")
 
     owner = models.ForeignKey(
-        User,
+        to=User,
         verbose_name="Владелец",
         help_text="Укажите владельца продукта",
         blank=True,

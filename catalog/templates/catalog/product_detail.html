@@ -15,6 +15,18 @@
                 <div class="card-header py-3">
                     <h3 class="my-0 fw-normal text-center">{{ product.name }}</h3>
                 </div>
+                <p class="card-text">
+                    <small class="text-muted text-body-secondary p-2">
+                        <b>Продавец:</b> <a href="#">{{ product.owner }}</a>
+                    </small>
+                    <small class="text-muted text-body-secondary p-2">
+                        <button type="button" class="{% if product.is_publication == True %}btn btn-outline-success{% else %}btn btn-outline-secondary btn-sm{% endif %}">{% if product.is_publication == True %}<span class="badge text-bg-success rounded-circle"> </span> published{% else %}<span class="badge text-bg-secondary"> </span> not published{% endif %}</button>
+                        {% if product.is_publication == True and perms.catalog.can_unpublish_product %}
+                            <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-sm btn-outline-danger">Отменить публикацию</a>
+                        {% endif %}
+                    </small>
+                </p>
+
                 {% if product.photo == null %}
                     <img src="{{ product.photo | media_filter }}">
                 {% else %}
@@ -28,8 +40,12 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="btn-group mt-3">
                             <a href="{% url 'catalog:product_list' %}" class="btn btn-sm btn-outline-info">Назад</a>
+                            {% if user == product.owner or perms.catalog.change_product %}
                             <a href="{% url 'catalog:product_edit' product.pk %}" class="btn btn-sm btn-outline-secondary">Изменить</a>
+                            {% endif %}
+                            {% if user == product.owner or perms.catalog.delete_product %}
                             <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-sm btn-outline-danger">Удалить</a>
+                            {% endif %}
                         </div>
                         <small class="text-body-secondary">{{ product.updated_at }}</small>
                     </div>
