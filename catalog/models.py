@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models import DateField
 
+from users.models import User
+
 
 class Category(models.Model):
     """Класс для добавлений категорий продуктов"""
@@ -33,8 +35,20 @@ class Product(models.Model):
     )
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE, related_name="products")
     price = models.IntegerField(verbose_name="Цена", help_text="Введите цену за покупку")
+
+    owner = models.ForeignKey(
+        User,
+        verbose_name="Владелец",
+        help_text="Укажите владельца продукта",
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="own_products",
+    )
+
     created_at = DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now=True, verbose_name="Дата последнего изменения")
+    is_publication = models.BooleanField(default=False, verbose_name="Статус публикации")
 
     def __str__(self):
         return f"{self.name} по цене: {self.price}$"
@@ -43,3 +57,6 @@ class Product(models.Model):
         verbose_name = "продукт"
         verbose_name_plural = "продукты"
         ordering = ["name", "price", "category"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+        ]
