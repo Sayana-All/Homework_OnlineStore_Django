@@ -110,12 +110,9 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
     def test_func(self):
         """Добавляем форму для модератора при наличии прав"""
-        product = self.request.product
-        product.save()
+
         user = self.request.user
-        user.save()
-        if not user == product.owner or not user.has_perm("catalog.delete_product"):
-            raise PermissionDenied
+        return user == self.get_object().owner or user.has_perm("catalog.delete_product")
 
 
 class ContactsTemplateView(LoginRequiredMixin, TemplateView):
