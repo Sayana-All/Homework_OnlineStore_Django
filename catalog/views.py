@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.http import HttpResponse
@@ -65,7 +65,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def get_form_class(self):
         """Добавляем форму для модератора при наличии прав"""
         user = self.request.user
-        if user == self.object.owner:
+        if user == self.object.owner or user.has_perm("catalog.change_product"):
             return ProductForm
         if user.has_perm("catalog.can_unpublish_product"):
             return ProductModerateForm
@@ -107,6 +107,15 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:product_list")
+
+    def test_func(self):
+        """Добавляем форму для модератора при наличии прав"""
+        product = self.request.product
+        product.save()
+        user = self.request.user
+        user.save()
+        if not user == product.owner or not user.has_perm("catalog.delete_product"):
+            raise PermissionDenied
 
 
 class ContactsTemplateView(LoginRequiredMixin, TemplateView):
