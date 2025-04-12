@@ -25,7 +25,7 @@
                             </ul>
                         </div>
                         {% else %}
-                        <button type="button" class="{% if product.is_publication == True %}btn btn-outline-success{% else %}btn btn-outline-secondary btn-sm{% endif %}">{% if product.is_publication == True %}<span class="badge text-bg-success rounded-circle"> </span> published{% else %}<span class="badge text-bg-secondary"> </span> not published{% endif %}</button>
+                        <button type="button" class="{% if product.is_publication == True %}btn btn-outline-success{% else %}btn btn-outline-secondary{% endif %}">{% if product.is_publication == True %}<span class="badge text-bg-success rounded-circle"> </span> published{% else %}<span class="badge text-bg-secondary"> </span> not published{% endif %}</button>
                         {% endif %}
                     </small>
                 </div>

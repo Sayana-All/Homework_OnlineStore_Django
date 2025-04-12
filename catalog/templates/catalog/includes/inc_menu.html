@@ -12,6 +12,16 @@
                 <li class="nav-item">
                     <a class="me-3 py-2 nav-link text-decoration-none" href="{% url 'catalog:product_list' %}">Главная</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Категории
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for category in categories %}
+                            <li><a class="dropdown-item" href="{% url 'catalog:products_by_category' category.id %}">{{ category }}</a></li>
+                        {% endfor%}
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a class="me-3 py-2 nav-link text-decoration-none" href="{% url 'catalog:contacts' %}">Контакты</a>
                 </li>
