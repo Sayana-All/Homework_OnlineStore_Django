@@ -1,7 +1,7 @@
 from django.core.cache import cache
 
+from catalog.models import Category, Product
 from config.settings import CACHE_ENABLED
-from catalog.models import Product, Category
 
 
 class ProductService:

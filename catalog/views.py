@@ -1,16 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.forms import inlineformset_factory
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from unicodedata import category
 
 from catalog.forms import ProductForm, ProductModerateForm
-from catalog.models import Product, Category
+from catalog.models import Category, Product
 from catalog.services import ProductService
 from config.settings import forbidden_words
 
