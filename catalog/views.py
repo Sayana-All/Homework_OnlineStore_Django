@@ -3,11 +3,15 @@ from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from unicodedata import category
 
 from catalog.forms import ProductForm, ProductModerateForm
-from catalog.models import Product
+from catalog.models import Product, Category
+from catalog.services import ProductService
 from config.settings import forbidden_words
 
 
@@ -18,7 +22,17 @@ class ProductListView(ListView):
     template_name = "catalog/product_list.html"
     context_object_name = "products"
 
+    def get_queryset(self):
+        return ProductService.get_product_from_cache()
 
+    def get_context_data(self, **kwargs):
+        """Переопределяем метод для добавления списка запрещенных слов в форму"""
+        context = super().get_context_data(**kwargs)
+        context["forbidden_words"] = forbidden_words
+        return context
+
+
+@method_decorator(cache_page(300), name="dispatch")
 class ProductDetailView(LoginRequiredMixin, DetailView):
     """Контроллер для отображения детальной информации о продукте"""
 
@@ -39,6 +53,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         """Переопределяем метод для добавления списка запрещенных слов в форму"""
         context = super().get_context_data(**kwargs)
         context["forbidden_words"] = forbidden_words
+        context["categories"] = Category.objects.all()
         return context
 
     def form_valid(self, form):
@@ -77,31 +92,8 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         context["forbidden_words"] = forbidden_words
         return context
 
-    # def get_context_data(self, **kwargs):
-    #    """Метод для изменения и добавления новой категории товара"""
-    #    context_data = super().get_context_data(**kwargs)
-    #    ProductFormset = inlineformset_factory(Product, Category, CategoryForm, extra=1)
-    #    if self.request.method == "POST":
-    #        context_data["formset"] = ProductFormset(self.request.POST, instance=self.object)
-    #    else:
-    #        context_data["formset"] = ProductFormset(instance=self.object)
-    #    return context_data
 
-    #
-    # def form_valid(self, form):
-    #    """Метод для переопределения валидации формы"""
-    #    context_data = self.get_context_data()
-    #    formset = context_data["formset"]
-    #    if form.is_valid() and formset.is_valid():
-    #        self.object = form.save()
-    #        formset.instance = self.object
-    #        formset.save()
-    #        return super().form_valid(form)
-    #    else:
-    #        return self.render_to_response(self.get_context_data(form=form, formset=formset))
-
-
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """Контроллер для удаления продукта"""
 
     model = Product
@@ -113,6 +105,24 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
         user = self.request.user
         return user == self.get_object().owner or user.has_perm("catalog.delete_product")
+
+
+class ProductsByCategoryListView(LoginRequiredMixin, ListView):
+    """Контроллер для категории со списком входящих в нее продуктов"""
+
+    model = Category
+    template_name = "catalog/products_by_category.html"
+    context_object_name = "products"
+
+    def get_queryset(self):
+        category_id = self.kwargs.get("pk")
+        return ProductService.get_products_by_category(category_id=category_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = Category.objects.get(pk=self.kwargs.get("pk"))
+        context["categories"] = Category.objects.all()
+        return context
 
 
 class ContactsTemplateView(LoginRequiredMixin, TemplateView):
