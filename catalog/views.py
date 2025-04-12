@@ -1,11 +1,12 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModerateForm
 from catalog.models import Product
 from config.settings import forbidden_words
 
@@ -40,6 +41,14 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         context["forbidden_words"] = forbidden_words
         return context
 
+    def form_valid(self, form):
+        """Метод для переопределения валидации для автоматического добавления владельца товара"""
+        product = form.save()
+        user = self.request.user
+        product.owner = user
+        product.save()
+        return super().form_valid(form)
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """Контроллер для редактирования существующего продукта"""
@@ -52,6 +61,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         """Метод для изменения адреса перенаправления после редактирования записи"""
         return reverse("catalog:product_detail", args=[self.kwargs.get("pk")])
+
+    def get_form_class(self):
+        """Добавляем форму для модератора при наличии прав"""
+        user = self.request.user
+        if user == self.object.owner or user.has_perm("catalog.change_product"):
+            return ProductForm
+        if user.has_perm("catalog.can_unpublish_product"):
+            return ProductModerateForm
+        raise PermissionDenied
 
     def get_context_data(self, **kwargs):
         """Переопределяем метод для добавления списка запрещенных слов в форму"""
@@ -69,19 +87,18 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     #        context_data["formset"] = ProductFormset(instance=self.object)
     #    return context_data
 
-
-#
-# def form_valid(self, form):
-#    """Метод для переопределения валидации формы"""
-#    context_data = self.get_context_data()
-#    formset = context_data["formset"]
-#    if form.is_valid() and formset.is_valid():
-#        self.object = form.save()
-#        formset.instance = self.object
-#        formset.save()
-#        return super().form_valid(form)
-#    else:
-#        return self.render_to_response(self.get_context_data(form=form, formset=formset))
+    #
+    # def form_valid(self, form):
+    #    """Метод для переопределения валидации формы"""
+    #    context_data = self.get_context_data()
+    #    formset = context_data["formset"]
+    #    if form.is_valid() and formset.is_valid():
+    #        self.object = form.save()
+    #        formset.instance = self.object
+    #        formset.save()
+    #        return super().form_valid(form)
+    #    else:
+    #        return self.render_to_response(self.get_context_data(form=form, formset=formset))
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
@@ -90,6 +107,12 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = "catalog/product_confirm_delete.html"
     success_url = reverse_lazy("catalog:product_list")
+
+    def test_func(self):
+        """Добавляем форму для модератора при наличии прав"""
+
+        user = self.request.user
+        return user == self.get_object().owner or user.has_perm("catalog.delete_product")
 
 
 class ContactsTemplateView(LoginRequiredMixin, TemplateView):

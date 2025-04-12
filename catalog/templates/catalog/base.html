@@ -157,10 +157,11 @@
     <div class="container py-3">
         {% include "catalog/includes/inc_menu.html" %}
 
-        <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-          {% include "catalog/includes/header.html" %}
+        <div class="container-fluid">
+            <div class="pricing-header p-5 pb-md-4 mx-auto text-center">
+              {% include "catalog/includes/header.html" %}
+            </div>
         </div>
-
         <div class="container">
         {% block content%}{% endblock %}
 

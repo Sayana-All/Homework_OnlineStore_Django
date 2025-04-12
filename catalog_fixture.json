@@ -1,70 +1,182 @@
 [
 {
-    "model": "catalog.category",
-    "pk": 5,
+    "model": "catalog.product",
+    "pk": 9,
     "fields": {
-        "name": "Мебель для дома",
-        "description": ""
-    }
-},
-{
-    "model": "catalog.category",
-    "pk": 6,
-    "fields": {
-        "name": "Бытовая техника",
-        "description": "Техника для дома на все случаи жизни"
+        "name": "Удобный сервис рассылок",
+        "description": "- Неограниченная лицензия\r\n- Поддержка\r\n- Установка на сервер\r\n- Получение обновлений",
+        "photo": "photos/Сервис_рассылок_9tJ7duu.png",
+        "category": 7,
+        "price": 140,
+        "owner": 4,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": false
     }
 },
 {
     "model": "catalog.product",
-    "pk": 4,
+    "pk": 10,
     "fields": {
-        "name": "Кровать 2-х спальная",
-        "description": "Хорошая 2-х спальная кровать с деревянным каркасом",
-        "photo": "photos/Кровать_двуспальная.jpeg",
-        "category": 5,
-        "price": 15000,
-        "created_at": "2025-03-01",
-        "updated_at": "2025-02-28T21:25:09.310Z"
+        "name": "Стартовый сервис рассылок",
+        "description": "Временная лицензия на 120 дней (первый месяц бесплатно) с возможностью продления \r\nТехподдержка в случаях технических неисправностей и ошибок.\r\nУстановка на сервер.",
+        "photo": "photos/Сервис_рассылок_2DaY4Dt.png",
+        "category": 7,
+        "price": 60,
+        "owner": 1,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": true
     }
 },
 {
     "model": "catalog.product",
-    "pk": 5,
+    "pk": 11,
     "fields": {
-        "name": "Шкаф-купе",
-        "description": "Большой платяной шкаф с зеркалами",
-        "photo": "photos/шкаф.jpg",
-        "category": 5,
-        "price": 19900,
-        "created_at": "2025-03-01",
-        "updated_at": "2025-03-01T18:12:34.136Z"
+        "name": "Бот авторизации",
+        "description": "Телеграмм бот для авторизации на сайте. Безопасное получение логина и пароля для входа пользователя на сайт.",
+        "photo": "photos/тг-бот_gYA5UGu.png",
+        "category": 8,
+        "price": 65,
+        "owner": 4,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": true
     }
 },
 {
     "model": "catalog.product",
-    "pk": 7,
+    "pk": 12,
     "fields": {
-        "name": "Телевизор ж/к, 27 дюймов",
-        "description": "Широкоэкранный телевизор с насыщенным ярким изображением",
-        "photo": "photos/Телевизор.jpg",
-        "category": 6,
-        "price": 22500,
-        "created_at": "2025-03-01",
-        "updated_at": "2025-03-01T18:04:44.301Z"
+        "name": "Новостной бот",
+        "description": "Телеграмм бот для получения пользователем последних новостей и обновлений на сайте или в вашем веб-приложений.",
+        "photo": "photos/тг-бот_WYpVnHE.png",
+        "category": 8,
+        "price": 30,
+        "owner": 4,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": true
     }
 },
 {
     "model": "catalog.product",
-    "pk": 8,
+    "pk": 13,
     "fields": {
-        "name": "Чайник эл. 1,7л",
-        "description": "Чайник электрический, стеклокерамика",
-        "photo": "photos/Чайник.png",
-        "category": 6,
-        "price": 3200,
-        "created_at": "2025-03-01",
-        "updated_at": "2025-03-01T18:01:18.278Z"
+        "name": "Банковский виджет",
+        "description": "Создание банковского веб-приложения для взаимодействия с доходами, картами и банковскими услугами.",
+        "photo": "photos/Банк_виджет_KXQOOdg.jpg",
+        "category": 10,
+        "price": 295,
+        "owner": 6,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 14,
+    "fields": {
+        "name": "Приложение онлайн-магазина",
+        "description": "Создание онлайн-магазина с возможностью работы с продуктами, категориями, доставкой и услугами купли-продажи...",
+        "photo": "photos/Онлайн-магазин_zBhWUwC.jpg",
+        "category": 10,
+        "price": 335,
+        "owner": 6,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 15,
+    "fields": {
+        "name": "Веб-приложение складского предприятия",
+        "description": "Приложение для создания и организации работы оптовых и складских предприятий.\r\n- Неограниченная лицензия\r\n- Поддержка\r\n- Установка на сервер\r\n- Получение обновлений",
+        "photo": "photos/Нет_изображения_FNVAjJN.jpg",
+        "category": 10,
+        "price": 460,
+        "owner": 1,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 16,
+    "fields": {
+        "name": "Мобильное дополнение к складскому приложению",
+        "description": "Мобильная версия складского приложения для получения и сбора заявок.\r\nПоддержка лицензии, бесплатные обновления включены.",
+        "photo": "photos/Нет_изображения_cQgEa4h.jpg",
+        "category": 11,
+        "price": 80,
+        "owner": 1,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": false
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 17,
+    "fields": {
+        "name": "Онлайн-расширение",
+        "description": "Расширение вашего веб-приложения с возможностью работы на сайте.",
+        "photo": "photos/Онлайн-магазин_HiwmGtr.jpg",
+        "category": 9,
+        "price": 150,
+        "owner": 6,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": false
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 18,
+    "fields": {
+        "name": "Антивирус",
+        "description": "Установка антивируса в приложения для нейтрализации и защиты от вредоносных программ",
+        "photo": "photos/Антивирус_d9RYG0D.jpg",
+        "category": 9,
+        "price": 220,
+        "owner": null,
+        "created_at": "2025-03-12",
+        "updated_at": "2025-04-11",
+        "is_publication": true
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 19,
+    "fields": {
+        "name": "Киносервис",
+        "description": "Веб-приложение для просмотра фильмов и сериалов онлайн.",
+        "photo": "photos/Киносервис_Nhv5tIf.png",
+        "category": 10,
+        "price": 500,
+        "owner": 1,
+        "created_at": "2025-03-22",
+        "updated_at": "2025-04-11",
+        "is_publication": false
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 27,
+    "fields": {
+        "name": "Test",
+        "description": "нууваппп",
+        "photo": "photos/Нет_изображения_5Zjl6Bu.jpg",
+        "category": 11,
+        "price": 999999,
+        "owner": 6,
+        "created_at": "2025-04-11",
+        "updated_at": "2025-04-11",
+        "is_publication": true
     }
 }
 ]

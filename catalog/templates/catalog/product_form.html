@@ -45,6 +45,15 @@
                                     <small class="text-danger">{{ form.name.errors.0 }}</small>
                                 {% endif %}
                             </div>
+                            {% if user == product.owner or perms.catalog.can_unpublish_product %}
+                                <div class="mb-3">
+                                    <label for="id_publication">Статус публикации:</label>
+                                    {{ form.is_publication }}
+                                    {% if form.is_publication.errors %}
+                                        <small class="text-danger">{{ form.is_publication.errors.0 }}</small>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
                             <div class="mb-3">
                                 <label for="id_description">Описание:</label>
                                 {{ form.description }}

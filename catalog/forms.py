@@ -22,10 +22,14 @@ class ProductForm(ModelForm):
 
     class Meta:
         model = Product
-        exclude = ["created_at", "updated_at"]
+        exclude = ["owner", "created_at", "updated_at"]
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            if isinstance(field, BooleanField):
+                field.widget.attrs["class"] = "form-check-input"
+
         self.fields["name"].widget.attrs.update(
             {"class": "form-control", "placeholder": "Введите наименование товара"}
         )
@@ -59,6 +63,14 @@ class ProductForm(ModelForm):
                 self.add_error(
                     "description", "Внимание! Не используйте запрещенные слова в описании продукта (см. Справка)"
                 )
+
+
+class ProductModerateForm(StyleFormMixin, ModelForm):
+    """Класс формы редактирования модели продуктов для модераторов"""
+
+    class Meta:
+        model = Product
+        fields = ["is_publication"]
 
 
 class CategoryForm(StyleFormMixin, ModelForm):

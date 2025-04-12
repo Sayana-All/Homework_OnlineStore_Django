@@ -25,12 +25,13 @@ class UserCreateView(CreateView):
         token = secrets.token_hex(16)
         user.token = token
         user.save()
+        password = form.data["password1"]
         host = self.request.get_host()
         url = f"http://{host}/users/email-confirm/{token}/"
 
         send_mail(
             subject="Подтверждение почты для регистрации",
-            message=f"Здравствуйте и добро пожаловать на наш сайт!\nЧтобы подтвердить регистрацию в нашем сервисе, пожалуйста, перейдите по ссылке: {url}",
+            message=f"Здравствуйте и добро пожаловать на наш сайт!\nЧтобы подтвердить регистрацию в нашем сервисе, пожалуйста, перейдите по ссылке: {url}\nВаш пароль для входа: {password}",
             from_email=EMAIL_HOST_USER,
             recipient_list=[user.email],
         )
