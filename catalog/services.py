@@ -17,7 +17,7 @@ class ProductService:
         if products is not None:
             return products
         products = Product.objects.all()
-        cache.set("products_list", products)
+        cache.set("products_list", products, 60)
         return products
 
     @staticmethod
@@ -36,5 +36,5 @@ class ProductService:
 
         category = Category.objects.get(pk=category_id)
         products_by_category = Product.objects.filter(category=category)
-        cache.set(key, products_by_category)
+        cache.set(key, products_by_category, 60)
         return products_by_category

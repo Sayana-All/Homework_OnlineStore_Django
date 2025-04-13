@@ -30,7 +30,7 @@ class ProductListView(ListView):
         return context
 
 
-@method_decorator(cache_page(300), name="dispatch")
+@method_decorator(cache_page(60), name="dispatch")
 class ProductDetailView(LoginRequiredMixin, DetailView):
     """Контроллер для отображения детальной информации о продукте"""
 
