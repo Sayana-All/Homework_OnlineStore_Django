@@ -1,8 +1,11 @@
 {% extends "catalog/base.html" %}
 
-{% block title %}Главная страница{% endblock %}
+{% block title %}Продукты по категории{% endblock %}
 
 {% block content %}
+    <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
+        <h2 class="display-4"><b>Продукты в категории "{{ category.name }}"</b></h2>
+    </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a class="me-3 mb-3 btn btn-success" href="{% url 'catalog:add_product' %}" role="button"><b>+ Новый продукт</b></a>
     </div>
@@ -57,6 +60,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        {% empty %}
+        <div class="col">
+            <h4 class="my-0 fw-normal text-start">В данной категории нет продуктов</h4>
         </div>
         {% endfor %}
     </div>
