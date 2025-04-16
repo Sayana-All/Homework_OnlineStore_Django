@@ -10,7 +10,6 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from catalog.forms import ProductForm, ProductModerateForm
 from catalog.models import Category, Product
 from catalog.services import ProductService
-from config.settings import forbidden_words
 
 
 class ProductListView(ListView):
@@ -22,12 +21,6 @@ class ProductListView(ListView):
 
     def get_queryset(self):
         return ProductService.get_product_from_cache()
-
-    def get_context_data(self, **kwargs):
-        """Переопределяем метод для добавления списка запрещенных слов в форму"""
-        context = super().get_context_data(**kwargs)
-        context["forbidden_words"] = forbidden_words
-        return context
 
 
 @method_decorator(cache_page(60), name="dispatch")
@@ -46,13 +39,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     template_name = "catalog/product_form.html"
     success_url = reverse_lazy("catalog:product_list")
-
-    def get_context_data(self, **kwargs):
-        """Переопределяем метод для добавления списка запрещенных слов в форму"""
-        context = super().get_context_data(**kwargs)
-        context["forbidden_words"] = forbidden_words
-        context["categories"] = Category.objects.all()
-        return context
 
     def form_valid(self, form):
         """Метод для переопределения валидации для автоматического добавления владельца товара"""
@@ -84,12 +70,6 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             return ProductModerateForm
         raise PermissionDenied
 
-    def get_context_data(self, **kwargs):
-        """Переопределяем метод для добавления списка запрещенных слов в форму"""
-        context = super().get_context_data(**kwargs)
-        context["forbidden_words"] = forbidden_words
-        return context
-
 
 class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """Контроллер для удаления продукта"""
@@ -113,13 +93,12 @@ class ProductsByCategoryListView(LoginRequiredMixin, ListView):
     context_object_name = "products"
 
     def get_queryset(self):
-        category_id = self.kwargs.get("pk")
+        category_id = self.kwargs["pk"]
         return ProductService.get_products_by_category(category_id=category_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["category"] = Category.objects.get(pk=self.kwargs.get("pk"))
-        context["categories"] = Category.objects.all()
+        context["category"] = Category.objects.get(pk=self.kwargs["pk"])
         return context
 
 
